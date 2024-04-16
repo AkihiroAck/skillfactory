@@ -10,7 +10,7 @@ player = 'X'
 
 
 def is_over():
-    if any(all(cell == player for cell in row) for row in game_progress) or any(all(game_progress[row][col] == player for row in range(3)) for col in range(3)) or all([game_progress[i][i] == player for i in range(3)]):
+    if any(all(cell == player for cell in row) for row in game_progress) or any(all(game_progress[row][col] == player for row in range(3)) for col in range(3)) or all([game_progress[i][i] == player for i in range(3)]) or all([game_progress[i][2-i] == player for i in range(3)]):
         print(f'Player: - {player} - Win!')
         return True
     elif '-' not in [x for i in game_progress for x in i]:
