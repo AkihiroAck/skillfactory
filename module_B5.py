@@ -1,41 +1,47 @@
-def input_xo(message):
-    k = input(message).lower()
-    if len(k) != 2:
-        print('input key and value')
-        input_xo(message)
-    if k[0] in ['a','b','c'] and k[1] in ['1','2','3']:
-        if test[k] == '-':
-            return k
-        else:
-            print('cell is not empty')
-            input_xo(message)
+game_progress = [
+    ['-', '-', '-'],
+    ['-', '-', '-'],
+    ['-', '-', '-']
+]
+
+print(' ', 0, 1, 2, '\n0', *game_progress[0], '\n1', *game_progress[1], '\n2', *game_progress[2], '\n')
+
+player = 'X'
+
+
+def is_over():
+    if any(all(cell == player for cell in row) for row in game_progress) or any(all(game_progress[row][col] == player for row in range(3)) for col in range(3)) or all([game_progress[i][i] == player for i in range(3)]):
+        print(f'Player: - {player} - Win!')
+        return True
+    elif '-' not in [x for i in game_progress for x in i]:
+        print('No Winner!')
+        return True
     else:
-        print('no such cell')
-        input_xo(message)
+        return False
+        
 
-
-test = {'a1':'-','b1':'-','c1':'-','a2':'-','b2':'-','c2':'-','a3':'-','b3':'-','c3':'-'}
-
-
-print('  a b c \n1',*list(test.values())[0:3],'1\n2',*list(test.values())[3:6],'2\n3',*list(test.values())[6:9],'3\n  a b c\n')
-
-
-def play_xo():
+def player_move():
+    while True:
+        try:
+            p_move = input('Input: ')
+            if len(p_move) == 2 and p_move[0] in '012' and p_move[1] in '012' and game_progress[int(p_move[0])][int(p_move[1])] == '-':
+                game_progress[int(p_move[0])][int(p_move[1])] = player
+                break
+            else:
+                print('Incorrect empty!')
+        except ValueError:
+            print('Error!')
+            
+            
+def game():
     global player
-    try:
-        if player == 'o':
-            player = 'x'
-        else:
-            player = 'o'
-    except NameError:
-        player = 'x'
+    while True:
+        print('Player:', player)
+        player_move()
+        print(' ', 0, 1, 2, '\n0', *game_progress[0], '\n1', *game_progress[1], '\n2', *game_progress[2], '\n')
+        if is_over():
+            break
+        player = 'X' if player == 'O' else 'O'
 
-    k = input_xo(f'{player}: ')
-    test[k] = player
-    print('  a b c \n1', *list(test.values())[0:3], '1\n2', *list(test.values())[3:6], '2\n3',*list(test.values())[6:9], '3\n  a b c\n')
-    if '-' not in test.values():
-        print('Finish')
-    else:
-        play_xo()
 
-play_xo()
+game()
