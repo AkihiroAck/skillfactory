@@ -164,7 +164,7 @@ def check_win(board):
 def play_game():
     player_board = Board(generate_ships())
     computer_board = Board(generate_ships())
-    hide = False
+    hide = True
     print()
     print('computer_board')
     computer_board.display(hide)
