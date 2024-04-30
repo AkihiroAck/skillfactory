@@ -164,6 +164,8 @@ def check_win(board):
 def play_game():
     player_board = Board(generate_ships())
     computer_board = Board(generate_ships())
+
+    # Чит - скрыть или показать корабли врага (True|False)
     hide = True
     print()
     print('computer_board')
